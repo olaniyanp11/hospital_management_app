@@ -121,4 +121,20 @@ router.get("/", checkCookie, (req, res) => {
   res.json("welcome");
 });
 
+// delete staff
+
+router.get("/delete/:id", async (req, res) => {
+  try {
+    const staff_id = req.params.id;
+    let deletedPatient = await Staff.findOneAndDelete({ _id: staff_id });
+    if (!deletedPatient) {
+      // If no staff is found with the given ID
+      return res.status(404).json({ error: "Staff not found" });
+    }
+    res.status(200).json("deleted staff successfully");
+  } catch (error) {
+    console.error("Error deleting staff:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 export default router;

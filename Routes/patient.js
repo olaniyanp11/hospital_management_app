@@ -119,6 +119,21 @@ router.get("/update/:id", checkPatientCookie, async (req, res) => {
   }
 });
 
+router.get("/delete/:id", async (req, res) => {
+  try {
+    const patient_id = req.params.id;
+    let deletedPatient = await Patient.findOneAndDelete({ _id: patient_id });
+    if (!deletedPatient) {
+      // If no patient is found with the given ID
+      return res.status(404).json({ error: "Patient not found" });
+    }
+    res.status(200).json("deleted patient successfully");
+  } catch (error) {
+    console.error("Error deleting patient:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // get all patients
 router.get("/all", checkPatientCookie, async (req, res) => {
   let patients = await Patient.find();
