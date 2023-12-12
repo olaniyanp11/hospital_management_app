@@ -4,8 +4,12 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import checkCookie from "../middlewares/checkCookie.js";
 
-
 const router = express.Router();
+
+router.get("/all", checkCookie, async (req, res) => {
+  let staffs = await Staff.find();
+  res.json({ staffs: staffs });
+});
 
 // Signup route
 router.post("/signup", async (req, res) => {
@@ -62,7 +66,7 @@ router.post("/login", async (req, res) => {
   try {
     // Find the user with the given email
     const user = await Staff.findOne({ email });
-
+    // console.log(user.password);
     // Check if the user exists and if the password is correct
     if (user && bcrypt.compareSync(password, user.password)) {
       const exp = Date.now() + 60 * 60 * 1000 * 24;
@@ -83,10 +87,34 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-    res.clearCookie("Authentication")
-    req.user = null
-    res.status(200).json("user logout")
-})
+  res.clearCookie("Authentication");
+  req.user = null;
+  res.status(200).json("user logout");
+});
+
+// update route
+
+router.get("/update/:id", checkCookie, async (req, res) => {
+  try {
+    let staff_id = req.params.id;
+    let staff = await Staff.findOne({ _id: staff_id });
+    if (!staff) {
+      res.status(401).json("staff not found ");
+    }
+    const { surname, firstname, bloodGroup, genotype, dateOfBirth, email } =
+      req.body;
+    staff.surname = surname;
+    staff.firstname = firstname;
+    staff.bloodGroup = bloodGroup;
+    staff.genotype = genotype;
+    staff.dateOfBirth = dateOfBirth;
+    staff.email = email;
+    await staff.save();
+    res.status(200).json("updated user");
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // home route
 router.get("/", checkCookie, (req, res) => {

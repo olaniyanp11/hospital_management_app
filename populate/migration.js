@@ -7,10 +7,7 @@ console.log(process.env.DB_URL);
 async function updateDatabase() {
   try {
     console.log("Connecting to MongoDB...");
-    await mongoose.connect(process.env.DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.DB_URL);
 
     console.log("Connected to the database.");
 
