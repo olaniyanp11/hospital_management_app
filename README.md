@@ -1,4 +1,4 @@
-# Hospital Management System
+# Hospital Management System 	&#127973;
 
 ## Introduction
 The Hospital Management System is a web application designed to manage staff and patient records in a hospital setting. It includes features such as user authentication, staff and patient registration, and more.
