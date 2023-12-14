@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Staff from "./models/staff.js";
+import Staff from "../models/staff.js";
 import dotenv from "dotenv";
 dotenv.config();
 console.log(process.env.DB_URL);
@@ -13,7 +13,7 @@ async function updateDatabase() {
 
     // Update the database schema
     console.log("Updating the database schema...");
-    await Staff.updateMany({}, { $set: { contactNumber: null } });
+    await Staff.updateMany({ position: null}, { $set: { position: "Staff" } });
 
     console.log("Database update successful.");
   } catch (error) {

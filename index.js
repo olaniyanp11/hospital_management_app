@@ -7,7 +7,9 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import check from "./middlewares/check.js";
 import staffrouter from "./Routes/staff.js";
-import patientrouter from "./Routes/patient.js" 
+import patientrouter from "./Routes/patient.js";
+import doctorrouter from "./Routes/Doctors.js";
+import nocache from "nocache";
 // import adminrouter from "./Routes/admin.js";
 
 const app = express();
@@ -26,16 +28,25 @@ mongoose
   });
 
 // app middle wares
+app.set("view engine", "ejs");
+app.use(express.static("assets"));
 app.use(check);
 app.use(cookieParser());
 app.use(express.json());
 app.use("/staff", staffrouter);
 app.use("/patient", patientrouter);
+app.use("/doctor", doctorrouter);
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(nocache());
 // routes
 app.get("/", (req, res) => {
-  res.json("welcome to hospital");
+  res.render("index");
+});
+app.get("/about", (req, res) => {
+  res.render("about");
+});
+app.get("/services", (req, res) => {
+  res.render("services");
 });
 // app.post('/user/signup')
 

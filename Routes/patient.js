@@ -144,5 +144,5 @@ router.get("/all", checkPatientCookie, async (req, res) => {
 router.get("/", checkPatientCookie, (req, res) => {
   res.json("welcome");
 });
-
+ 
 export default router;
