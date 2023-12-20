@@ -122,6 +122,9 @@ body {
       }
     }
   }
+  .nav-container{
+    display: none
+  }
   .loginbtn {
     @include Mainbtn();
     background-color: #28eb35ab;

@@ -104,6 +104,9 @@ body {
 .navigation ul li a:hover {
   color: var(--grey-color);
 }
+.navigation .nav-container {
+  display: none;
+}
 .navigation .loginbtn {
   padding: 13px;
   border: 1px solid white;
