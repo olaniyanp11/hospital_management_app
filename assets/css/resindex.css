@@ -76,10 +76,12 @@
     width: 700px;
     z-index: 45;
     height: 130vh;
-    display: none;
+    margin-left: 200%;
+    transition: 1s;
   }
-  .navigation-ul.show {
+  #ul.show {
     display: flex;
+    margin-left: 30%;
   }
   .nav-container {
     left: 80%;
