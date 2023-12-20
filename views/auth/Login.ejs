@@ -1,0 +1,34 @@
+<%-include ("../head") %>
+<section>
+  <section class="Login">
+    <h1>Login now</h1>
+  </section>
+
+  <!-- Main Content Section -->
+  <main class="loginBox">
+    <form action="/patient/login" method="post">
+      <p>
+        <label for="email"> Email</label> <br />
+        <input type="email" name="email" placeholder="Example@gmail.com"
+        required class="<%= error.status === "true" ? 'error-input' : '' %>" />
+        <% if (error.emailerr !== '') { %>
+        <small class="error-message"> <%=error.emailerr %> </small>
+        <% } %>
+      </p>
+      <p>
+        <label for="Password"> Password</label> <br />
+        <input type="password" name="password" required minlength="4" class="<%=
+        error.status === "true" ? 'error-input' : '' %>" />
+         <% if (error.passerror !== '') { %>
+        <small class="error-message"> <%=error.passerror %> </small>
+        <% } %>
+      </p>
+      <button class="btn" type="submit">Login</button>
+      <small
+        >don't have an account ?
+        <a href="/patient/signup" class="link">signup now</a></small
+      >
+    </form>
+  </main>
+</section>
+<%-include ("../footer") %>

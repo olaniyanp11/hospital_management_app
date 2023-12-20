@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import multer from "multer";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+const app = express();
+app.use(express.urlencoded({ extended: true }));
 import check from "./middlewares/check.js";
 import staffrouter from "./Routes/staff.js";
 import patientrouter from "./Routes/patient.js";
@@ -12,7 +14,6 @@ import doctorrouter from "./Routes/Doctors.js";
 import nocache from "nocache";
 // import adminrouter from "./Routes/admin.js";
 
-const app = express();
 // declarations
 let port = process.env.PORT;
 let DB_URL = process.env.DB_URL;
@@ -53,6 +54,7 @@ app.get("/services", (req, res) => {
 app.all("*", (req, res) => {
   res.status(401).json("page not found");
 });
+
 
 app.listen(port, () => {
   console.log(`app running on port ${port}`);

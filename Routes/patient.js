@@ -30,11 +30,15 @@ router.post("/signup", async (req, res) => {
     const existingPatient = await Patient.findOne({ email });
 
     if (existingPatient) {
-      return res
-        .status(409)
-        .json({ error: "patient with this email already exists" });
+      return res.redirect(
+        "/patient/signup?emailerr=email exists try another one&status=true"
+      );
     }
-
+    if (password.length <= 4) {
+      return res.redirect(
+        "/patient/signup?passerror=password is too short&status=true"
+      );
+    }
     // Create a new Patient member
     const newPatient = new Patient({
       surname,
@@ -59,17 +63,33 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.get("/signup", (req, res) => {
+  const emailerr = req.query.emailerr;
+  const passerror = req.query.passerror;
+  const status = req.query.status;
+  const error = {
+    emailerr,
+    passerror,
+    status,
+  };
+  res.render("auth/signup",{error});
+});
+
 // Login route
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ error: "Email and password are required" });
+    return res.redirect(
+      "/patient/login?message=Email and password are required&status=true"
+    );
   }
   try {
     // Find the patient with the given email
     const patient = await Patient.findOne({ email: email });
     // Check if the patient exists and if the password is correct
-    if (patient && bcrypt.compareSync(password, patient.password)) {
+    if (!patient)
+      return res.redirect("/patient/login?emailerr=invalid Email&status=true");
+    if (bcrypt.compareSync(password, patient.password)) {
       const exp = Date.now() + 60 * 60 * 1000 * 24;
       const token = jwt.sign({ patient_id: patient._id }, process.env.SECRETE, {
         expiresIn: exp,
@@ -77,12 +97,28 @@ router.post("/login", async (req, res) => {
       res.cookie("Authentication", token, { maxAge: exp, httpOnly: true });
       return res.status(200).json({ message: "Login successful" });
     } else {
-      return res.status(401).json({ error: "Invalid password" });
+      return res.redirect(
+        "/patient/login?passerror=Invalid password&status=true"
+      );
     }
   } catch (error) {
     console.error("Error during login: ", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
+});
+
+router.get("/login", (req, res) => {
+  const message = req.query.message;
+  const emailerr = req.query.emailerr;
+  const passerror = req.query.passerror;
+  const status = req.query.status;
+  const error = {
+    message,
+    emailerr,
+    passerror,
+    status,
+  };
+  res.render("auth/Login", { error: error });
 });
 
 router.get("/logout", (req, res) => {
@@ -133,6 +169,10 @@ router.get("/delete/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+router.post("/test", (req, res) => {
+  console.log(req.body);
+  res.json(req.body);
+});
 
 // get all patients
 router.get("/all", checkPatientCookie, async (req, res) => {
@@ -144,5 +184,5 @@ router.get("/all", checkPatientCookie, async (req, res) => {
 router.get("/", checkPatientCookie, (req, res) => {
   res.json("welcome");
 });
- 
+
 export default router;

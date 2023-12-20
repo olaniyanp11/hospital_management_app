@@ -62,8 +62,33 @@
   }
 }
 @media (max-width: 559px) {
+  body {
+    overflow: hidden;
+  }
   .navigation ul {
+    // display: none;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20%;
+    padding-right: 20%;
+    gap: 30px;
+    margin-top: 500px;
+    background-color: rgb(255, 255, 255);
+    width: 700px;
+    z-index: 45;
+    height: 130vh;
     display: none;
+  }
+  .navigation-ul.show {
+    display: flex;
+  }
+  .nav-container {
+    left: 80%;
+    z-index: 450;
+  }
+  #l {
+    margin-left: 0px;
   }
   .page3 div {
     height: 350px;

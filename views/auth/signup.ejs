@@ -1,0 +1,79 @@
+<%- include("../head") %>
+<section>
+  <section class="Login">
+    <h1>Register Now</h1>
+  </section>
+
+  <!-- Main Content Section -->
+  <main class="loginBox">
+    <form action="/patient/signup" method="post">
+      <p>
+        <label for="surname">Surname</label> <br />
+        <input type="text" name="surname" required />
+      </p>
+      <p>
+        <label for="firstname">First Name</label> <br />
+        <input type="text" name="firstname" required />
+      </p>
+      <p>
+        <label for="gender">Gender</label> <br />
+        <select name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </p>
+      <p>
+        <label for="genotype">Genotype</label> <br />
+        <select name="genotype" required>
+          <option value="aa">AA</option>
+          <option value="as">AS</option>
+          <option value="ss">SS</option>
+          <!-- Add more options if needed -->
+        </select>
+      </p>
+      <p>
+        <label for="bloodGroup">Blood Group</label> <br />
+        <select name="bloodGroup" required>
+          <option value="o_positive">O+</option>
+          <option value="o_negative">O-</option>
+          <option value="a_positive">A+</option>
+          <option value="a_negative">A-</option>
+          <option value="b_positive">B+</option>
+          <option value="b_negative">B-</option>
+          <option value="ab_positive">AB+</option>
+          <option value="ab_negative">AB-</option>
+          <!-- Add more options if needed -->
+        </select>
+      </p>
+      <p>
+        <label for="email">Email</label> <br />
+        <input
+          type="email"
+          name="email"
+          placeholder="Example@gmail.com"
+          required
+          class="<%= error.status === 'true' ? 'error-input' : '' %>"
+        />
+        <% if (error.emailerr !== '') { %>
+          <small class="error-message"><%= error.emailerr %></small>
+        <% } %>
+      </p>
+      <p>
+        <label for="password">Password</label> <br />
+        <input
+          type="password"
+          name="password"
+          required
+          minlength="4"
+          class="<%= error.status === 'true' ? 'error-input' : '' %>"
+        />
+        <% if (error.passerror !== '') { %>
+          <small class="error-message"><%= error.passerror %></small>
+        <% } %>
+      </p>
+      <button class="btn" type="submit">Register</button>
+      <small>Already have an account <a href="/patient/login" class="link">Login now</a></small>
+    </form>
+  </main>
+</section>
+<%- include("../footer") %>
