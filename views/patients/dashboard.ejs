@@ -1,0 +1,113 @@
+<%-include('../head')%>
+<link
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/css/patients/style.css" />
+<body>
+  <hr />
+  <div class="container">
+    <aside>
+      <div class="profilePicture">
+        <div
+          class="picture"
+          style="background-image: url('../../profile/man.jpg')"
+        ></div>
+      </div>
+      <hr />
+      <h4 class="card-text">Name: <%=patient.surname%> <%=patient.firstname%></h4>
+      <p class="card-text">Contact Number: <%=patient.contactNumber%></p>
+      <img src="
+https://quickchart.io/qr?text=<%=patient._id%>&light=000000&dark=ffffff&ecLevel=H&size=200&format=svg" alt="">
+    </aside>
+    <div class="card">
+      <h5 class="card-header">
+        Login Status :
+        <span style="font-weight: 300; font-size: 18px">logged in</span>
+      </h5>
+      <form method="post" action="/patient/update/<%=patient._id%>" enctype="multipart/form-data">
+        <table class="table">
+      <input type="hidden" value="<%=patient._id%>" >
+            <td><p class="card-text">Gender:</p></td>
+            <td>
+              <span>
+                <select class="form-control" name="gender" id="gender" disabled>
+                  <option value="<%=patient.gender%>"><%=patient.gender%></option>
+                  <!-- Add other gender options if needed -->
+                </select>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><p class="card-text">Blood Group:</p></td>
+            <td>
+              <input type="text" class="form-control" name="bloodGroup" id="bloodGroup" value="<%=patient.bloodGroup%>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td><p class="card-text">Genotype:</p></td>
+            <td>
+              <input type="text" class="form-control" name="genotype" id="genotype" value="<%=patient.genotype%>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td><p class="card-text">Date of Birth:</p></td>
+            <td>
+              <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" value="<%=patient.dateOfBirth%>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td><p class="card-text">Email:</p></td>
+            <td>
+              <input type="email" class="form-control" name="email" id="email" value="<%=patient.email%>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td><p class="card-text">Account created At:</p></td>
+            <td>
+              <span type="text" class="form-control" name="createdAt" id="createdAt"><%=patient.createdAt%></span>
+            </td>
+          </tr>
+          <tr>
+            <td><p class="card-text">Updated At:</p></td>
+            <td>
+              <span type="text" class="form-control" name="updatedAt" id="updatedAt"><%=patient.updatedAt%></span>
+            </td>
+          </tr>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="enableEdit()" >Edit Details</button>
+        <button type="submit" class="btn btn-success" style="display:none;">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Appointment Information</h2>
+    <!-- ... (Your existing appointment table code) -->
+  </div>
+  <div>
+    <a href="#" class="appoint">Book an Appointment Now</a>
+  </div>
+</body>
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- JavaScript to enable form editing -->
+<script>
+
+  function enableEdit() {
+    var formInputs = document.querySelectorAll('form input, form select');
+    var btnPrimary = document.querySelector('.btn-primary');
+    var btnSuccess = document.querySelector('.btn-success');
+
+    formInputs.forEach(function(input) {
+      input.removeAttribute('disabled');
+    });
+
+    btnPrimary.style.display = 'none';
+    btnSuccess.style.display = 'inline-block'; // 'inline' if not using block layout
+  }
+</script>
+</html>
+<%-include('../footer')%>

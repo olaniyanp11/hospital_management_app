@@ -62,8 +62,9 @@
   }
 }
 @media (max-width: 559px) {
-  body {
-    overflow-x: hidden;
+  html.mdl-js  {
+    width: 100%;
+    overflow: hidden;
   }
   .navigation ul {
     // display: none;
@@ -78,20 +79,20 @@
     width: 700px;
     z-index: 45;
     height: 130vh;
-    margin-left:200%;
+    margin-left: 200%;
     transition: 1s;
   }
   #ul.show {
     display: flex;
     margin-left: 30%;
   }
-.navigation {
+  .navigation {
     .nav-container {
-    display: flex;
-    left: 80%;
-    z-index: 450;
+      display: flex;
+      left: 80%;
+      z-index: 450;
+    }
   }
-}
   #l {
     margin-left: 0px;
   }

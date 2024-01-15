@@ -52,7 +52,7 @@ app.get("/services", (req, res) => {
 // app.post('/user/signup')
 
 app.all("*", (req, res) => {
-  res.status(401).json("page not found");
+  res.status(401).render('404')
 });
 
 

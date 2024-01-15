@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const checkPatientCookie = (req, res, next) => {
+  console.log("check");
   try {
     let authenticatedcookie = req.cookies.Authentication;
     let decodecookie = jwt.verify(authenticatedcookie, process.env.SECRETE);

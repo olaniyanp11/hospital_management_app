@@ -72,7 +72,7 @@ router.get("/signup", (req, res) => {
     passerror,
     status,
   };
-  res.render("auth/signup",{error});
+  res.render("auth/signup", { error });
 });
 
 // Login route
@@ -95,7 +95,7 @@ router.post("/login", async (req, res) => {
         expiresIn: exp,
       });
       res.cookie("Authentication", token, { maxAge: exp, httpOnly: true });
-      return res.status(200).json({ message: "Login successful" });
+      return res.status(200).render("patients/dashboard", { patient });
     } else {
       return res.redirect(
         "/patient/login?passerror=Invalid password&status=true"
@@ -128,7 +128,8 @@ router.get("/logout", (req, res) => {
 });
 
 // update
-router.get("/update/:id", checkPatientCookie, async (req, res) => {
+router.get("/update/:id", checkPatientCookie, async (req, res) => { 
+  console.log("update");
   try {
     let patient_id = req.params.id;
     let patient = await Patient.findOne({ _id: patient_id });
@@ -170,7 +171,7 @@ router.get("/delete/:id", async (req, res) => {
   }
 });
 router.post("/test", (req, res) => {
-  console.log(req.body);
+  console.log("wait");
   res.json(req.body);
 });
 
