@@ -56,7 +56,7 @@ router.post("/signup", async (req, res) => {
     // Save the new Patient member to the database
     await newPatient.save();
 
-    return res.status(201).json({ message: "patient created successfully" });
+    return res.status(201).render('/auth/Login');
   } catch (error) {
     console.error("Error creating new patient:", error);
     return res.status(500).json({ error: "Internal Server Error" });

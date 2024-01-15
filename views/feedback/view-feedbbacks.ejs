@@ -1,0 +1,81 @@
+<!-- view-feedbacks.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Feedbacks</title>
+    <link rel="stylesheet" href="/css/view-feedbacks-style.css" />
+  </head>
+  <body>
+    <style>
+      /* view-feedbacks-style.css */
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      h2 {
+        color: #26ce31;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      thead {
+        background-color: #26ce31;
+        color: #ffffff;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ced4da;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    </style>
+    <div class="container">
+      <h2>All Feedbacks</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Feedback Type</th>
+            <th>Comments</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% feedbacks.forEach(feedback => { %>
+          <tr>
+            <td><%= feedback.name %></td>
+            <td><%= feedback.email %></td>
+            <td><%= feedback.feedbackType %></td>
+            <td><%= feedback.comments %></td>
+            <td><%= new Date(feedback.timestamp).toLocaleString() %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

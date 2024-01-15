@@ -11,6 +11,7 @@ import check from "./middlewares/check.js";
 import staffrouter from "./Routes/staff.js";
 import patientrouter from "./Routes/patient.js";
 import doctorrouter from "./Routes/Doctors.js";
+import Feedback from "./models/feedback.js";
 import nocache from "nocache";
 // import adminrouter from "./Routes/admin.js";
 
@@ -46,6 +47,42 @@ app.get("/", (req, res) => {
 app.get("/about", (req, res) => {
   res.render("about");
 });
+app.get("/feedback", (req, res) => {
+  res.render("feedback/index");
+});
+app.get("/all-feedbacks", async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find(); // Fetch all feedbacks from the database
+    res.render("feedback/view-feedbbacks", { feedbacks }); // Pass feedbacks to the template
+  } catch (error) {
+    console.error("Error fetching feedbacks:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+app.post("/feedback", (req, res) => {
+try {
+    const { name, email, feedbackType, comments } = req.body;
+  
+    // For demonstration purposes, storing feedback in an array
+     const newfeedback = new Feedback({
+      name,
+      email,
+      feedbackType,
+      comments,
+      timestamp: new Date().toLocaleString(),
+    });
+  newfeedback.save()
+    // Redirect to a thank you page (you can customize this page)
+    res.redirect("/thank-you");
+} catch (error) {
+  res.status(400).redirect('/')
+}
+});
+
+app.get("/thank-you", (req, res) => {
+  res.render("thank-you");
+});
+
 app.get("/services", (req, res) => {
   res.render("services");
 });
