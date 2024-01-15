@@ -25,6 +25,8 @@ body {
   width: 100%;
   background-color: var(--1stbackground-color);
   color: var(--text-color);
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .page1 {
